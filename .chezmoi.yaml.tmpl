@@ -1,6 +1,5 @@
 {{- $personal := false -}}{{/* true if this is a personal machine */}}
 {{- $personal = promptBool "personal" -}}
-{{- $os := "" }}
 {{- $work := false -}}{{/* true if this is a work machine */}}
 {{- $agekey := false -}}{{/* true if this machine has agekey to decrypt secret */}}
 {{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
@@ -17,7 +16,6 @@
   {{- $kubernetes = true -}}
 {{- end -}}
 
-{{ $os = .chezmoi.osRelease.id }}
 
 format: yaml
 sourceDir: {{ .chezmoi.sourceDir | quote }}
@@ -27,7 +25,6 @@ data:
   work: {{ $work }}
   agekey: {{ $agekey }}
   kubernetes: {{ $kubernetes }}
-  os: {{ $os | quote }}
 
 encryption: age
 
