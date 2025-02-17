@@ -1,0 +1,13 @@
+[credential]
+	helper = cache --timeout 21600
+	helper = oauth
+
+[url "ssh://git@github.com/"]
+  pushInsteadOf = https://github.com/
+
+[include]
+{{- if $.work }}
+  path = {{ .chezmoi.homeDir }}/.config/git/config_work
+{{- else }}
+  path = {{ .chezmoi.homeDir }}/.config/git/config_personal
+{{- end }}
