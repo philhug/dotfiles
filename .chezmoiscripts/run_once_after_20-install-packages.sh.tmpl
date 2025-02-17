@@ -46,13 +46,12 @@ while read package; do
   packages="$packages $package"
 done < "$PACKAGE_FILE"
 
-
 if [[ -n "$packages" ]]; then
   print_msg "Installing packages: $packages..." $YELLOW
 
 {{ if (eq $os "arch") -}}
   # Install all packages using dnf
-  sudo pacman -Sy --noconfirm $packages
+  yay -Sy --noconfirm $packages
 {{- end }}
 
 {{ if (eq $os "fedora") -}}
