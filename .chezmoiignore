@@ -1,3 +1,26 @@
 .github
 install.sh
 key.txt.age
+
+
+{{ if ne .chezmoi.os "linux" }}
+
+{{ end }}
+
+{{ if not .kubernetes }}
+.kube
+.talos
+.minio
+{{ end }}
+
+{{ if not .personal }}
+.config/git/config_personal
+{{ end }}
+
+{{ if not .work }}
+.config/git/config_work
+{{ end }}
+
+{{ if .ephemeral }}
+.ssh/id_ed25519
+{{ end }}

@@ -1,28 +1,56 @@
-{{- $personal := false -}}{{/* true if this is a personal machine */}}
-{{- $personal = promptBool "personal" -}}
+{{/* boolean feature tags */}}
+{{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
 {{- $work := false -}}{{/* true if this is a work machine */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $personal := false -}}{{/* true if this is a personal machine */}}
 {{- $agekey := false -}}{{/* true if this machine has agekey to decrypt secret */}}
 {{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
+{{- "" -}}
 
-{{- if $personal -}}
-  {{- $personal = true -}}
-  {{- $work = false -}}
-  {{- $agekey = true -}}
-  {{- $kubernetes = true -}}
-{{- else -}}
-  {{- $personal = false -}}
-  {{- $work = true -}}
-  {{- $agekey = true -}}
-  {{- $kubernetes = true -}}
+{{- $osID := .chezmoi.os -}}
+{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
 
+
+{{- $hostname := .chezmoi.hostname -}}
+
+{{- if eq .chezmoi.os "windows" -}}
+{{-   $ephemeral = true -}}
+{{- end -}}
+
+{{- if not $ephemeral -}}
+{{-   if eq $hostname "unknown" -}}
+{{-     $personal = true -}}
+{{-   else if stdinIsATTY -}}
+{{-     $personal = promptBoolOnce . "personal" "personal" -}}
+{{-     $work = promptBoolOnce . "work" "work" -}}
+{{-     $headless = promptBoolOnce . "headless" "headless" -}}
+{{-     $ephemeral = promptBoolOnce . "ephemeral" "ephemeral" -}}
+{{-   else -}}
+{{-     $ephemeral = true -}}
+{{-     $headless = true -}}
+{{-   end -}}
+{{- end -}}
+
+{{- if or $personal $work -}}
+{{-   $agekey = true -}}
+{{- end -}}
+
+{{- if $personal -}}
+{{-   $kubernetes = true -}}
+{{- end -}}
 
 format: yaml
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
-  personal: {{ $personal }}
+  ephemeral: {{ $ephemeral }}
   work: {{ $work }}
+  headless: {{ $headless }}
+  hostname: {{ $hostname | quote }}
+
+  personal: {{ $personal }}
   agekey: {{ $agekey }}
   kubernetes: {{ $kubernetes }}
 
