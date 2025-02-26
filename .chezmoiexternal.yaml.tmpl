@@ -37,4 +37,11 @@
     executable: true
     path: "bws"
 
+{{- if .kubernetes }}
+".local/bin/talosctl":
+    type: "file"
+    url: {{ gitHubLatestReleaseAssetURL "siderolabs/talos" (printf "talosctl-linux-amd64" ) | quote }}
+    executable: true
+
+{{- end }}
 {{- end }}
