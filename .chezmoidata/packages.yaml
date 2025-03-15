@@ -1,0 +1,92 @@
+packages:
+  linux:
+    arch:
+      aur:
+        - visual-studio-code-bin
+        - waydroid
+      core:
+        - gnupg
+        - python
+      extra:
+        - docker
+        - docker-buildx
+        - docker-compose
+        - flatpak
+        - git
+        - pam-u2f
+        - python
+        - python-pip
+        - python-pipx
+        - python-virtualenv
+        - ttf-liberation
+        - unzip
+        - vlc
+      flatpak:
+      kde:
+      multilib:
+    debian:
+      dra:
+        appimage:
+        bin:
+        package:
+        raw:
+      kde:
+      flatpak:
+      nala:
+        - docker-buildx-plugin
+        - docker-ce
+        - docker-ce-cli
+        - docker-compose-plugin
+        - flatpak
+        - git
+        - gnupg2
+        - libpam-u2f
+        - python3
+        - python3-pip
+        - python3-venv
+        - vlc
+        - waydroid
+      nala_url:
+    fedora:
+      dnf5:
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-ce
+        - docker-ce-cli
+        - docker-compose-plugin
+        - flatpak
+        - git
+        - gnupg2
+        - pam-u2f
+        - python3
+        - python3-pip
+        - python3-virtualenv
+        - vlc
+      dnf5_url:
+      dra:
+        appimage:
+        bin:
+        package:
+      flatpak:
+    linux_common:
+      dra:
+        appimage:
+        bin:
+      flatpak:
+        - io.ente.auth
+      kde:
+      linux_url:
+      tablet_only:
+  python3:
+    cli:
+  vs_code_extensions:
+  windows:
+    winget:
+      - 7zip.7zip
+      - ente-io.auth-desktop
+      - Git.Git
+      - GnuPG.GnuPG
+      - GnuPG.Gpg4win
+      - Python.Python.3.10
+      - Valve.Steam
+      - VideoLAN.VLC

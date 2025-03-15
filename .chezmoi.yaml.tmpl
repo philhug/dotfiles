@@ -1,3 +1,4 @@
+
 {{/* boolean feature tags */}}
 {{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
 {{- $work := false -}}{{/* true if this is a work machine */}}
@@ -7,27 +8,36 @@
 {{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
 {{- "" -}}
 
-{{- $osID := .chezmoi.os -}}
-{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
-{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+{{- if hasKey .chezmoi.osRelease "idLike" -}}
+{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.idLike -}}
 {{- end -}}
 
+{{- $profile := "invalid" -}}
 
 {{- $hostname := .chezmoi.hostname -}}
 
 {{- if eq .chezmoi.os "windows" -}}
 {{-   $ephemeral = true -}}
+{{-   $profile = "ephemeral" -}}
 {{- end -}}
 
 {{- if not $ephemeral -}}
 {{-   if eq $hostname "unknown" -}}
 {{-     $personal = true -}}
+{{-     $profile = "personal" -}}
 {{-   else if stdinIsATTY -}}
 {{-     $personal = promptBoolOnce . "personal" "personal" -}}
 {{-     $work = promptBoolOnce . "work" "work" -}}
 {{-     $headless = promptBoolOnce . "headless" "headless" -}}
 {{-     $ephemeral = promptBoolOnce . "ephemeral" "ephemeral" -}}
+{{-     $profile = "ephemeral" -}}
 {{-   else -}}
+{{-     $profile = "ephemeral" -}}
 {{-     $ephemeral = true -}}
 {{-     $headless = true -}}
 {{-   end -}}
@@ -45,6 +55,12 @@ format: yaml
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
+  osid: {{ $osid | quote }}
+  email: {{ $email | quote }}
+  username: "user"
+
+  profile: {{ $profile }}
+
   ephemeral: {{ $ephemeral }}
   work: {{ $work }}
   headless: {{ $headless }}
