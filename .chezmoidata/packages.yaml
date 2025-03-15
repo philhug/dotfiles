@@ -83,10 +83,7 @@ packages:
   windows:
     winget:
       - 7zip.7zip
-      - ente-io.auth-desktop
       - Git.Git
-      - GnuPG.GnuPG
-      - GnuPG.Gpg4win
       - Python.Python.3.10
       - Valve.Steam
       - VideoLAN.VLC
