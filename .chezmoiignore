@@ -4,7 +4,14 @@ key.txt.age
 
 
 {{ if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**
+dot_bashrc
+dot_config
+dot_local
+{{ end }}
 
+{{ if ne .chezmoi.os "windows" }}
+.chezmoiscripts/windows/**
 {{ end }}
 
 {{ if not .kubernetes }}
