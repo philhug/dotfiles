@@ -94,6 +94,7 @@ elif command -v dnf &>/dev/null; then
   rm -fr /tmp/dra
 
 elif command -v pacman &>/dev/null; then
+  echo nothing to be done for arch
 #  if ! grep -q '\[chaotic-aur\]' /etc/pacman.conf; then
 #    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 #    sudo pacman-key --lsign-key 3056513887B78AEB
