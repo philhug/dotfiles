@@ -43,5 +43,10 @@
     url: {{ gitHubLatestReleaseAssetURL "siderolabs/talos" (printf "talosctl-linux-amd64" ) | quote }}
     executable: true
 
+".local/bin/ionscale":
+    type: "file"
+    url: {{ gitHubLatestReleaseAssetURL "jsiebens/ionscale" (printf "ionscale_linux_amd64" ) | quote }}
+    executable: true
+
 {{- end }}
 {{- end }}
